@@ -1,0 +1,64 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <script type="text/javascript" src="core.js">
+        </script>
+    </head>
+    <body>
+        <canvas id="game" width="500" height="500">
+        </canvas>
+        <div id="model" style="width:100px">
+            <img src="resource/model01.png" id="model01" />
+        </div>
+        <script>
+        </script>
+        <script>
+            
+            var cxt = document.getElementById("game").getContext('2d');
+            
+            var map = new game.Map(200, 200, 5);
+            
+            var comp01 = new game.Comp();
+            
+            comp01.size = 5;
+            var img = new Image();
+            img.src = "resource/model01.png"
+            comp01.img_current = img;
+            map.addComp(50, 60, comp01);
+            
+            var comp02 = new game.Comp();
+            comp02.size = 30;
+            var img = new Image();
+            img.src = "resource/model01.png"
+            comp02.img_current = img;
+            map.addComp(10, 20, comp02);
+            
+            //map.deleteComp(52,61);
+            
+            function playgame(){
+                var mapdata = map.getData();
+                
+                for (var j = 0; j < mapdata.length; j++) {
+                    var hang = mapdata[j];
+                    for (var i = 0; i < hang.length; i++) {
+                        if (hang[i] instanceof game.Comp) {
+                            // alert(111);
+                            cxt.drawImage(hang[i].img_current, i * 5, j * 5, hang[i].size * 5, hang[i].size * 5);
+                        }
+                    }
+                    
+                }
+                setTimeout("playgame()", 50)
+            }
+            
+            function dx(){
+                comp01.size++
+                setTimeout("dx()", 1000)
+                
+            }
+            
+            playgame();
+            dx();
+        </script>
+    </body>
+</html>
