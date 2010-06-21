@@ -1,0 +1,63 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <script type="text/javascript" src="core.js">
+        </script>
+    </head>
+    <body>
+    	<canvas id="game" width="500" height="500">
+        </canvas>
+        <canvas id="map" style="display:none" width="2000" height="2000">
+        </canvas>
+        
+        <div id="model" style="width:100px">
+            <img src="resource/model01.png" id="model01" />
+        </div>
+        <script>
+        </script>
+        <script>
+            /*
+             var img = new Image();
+             img.src = "resource/model01.png"
+             var canvas = document.getElementById("game")
+             var cxt = canvas.getContext('2d');
+             var x = 0;
+             var y = 0;
+             function test(){
+             cxt.drawImage(img, x,y,1000 ,1000);
+             x = x - 2; y = y -2
+             setTimeout("test()", 40)
+             }
+             
+             test();
+             */
+            var canvas = document.getElementById("game")
+            var mapcanvas = document.getElementById("map")
+            var map = new game.Map(5, mapcanvas);
+            
+            var comp01 = new game.Comp();
+            
+            comp01.size = 300;
+            var img = new Image();
+            img.src = "resource/model01.png"
+            comp01.img_current = img;
+            map.addComp(0, 0, comp01);
+             map.createMapImg();
+            
+            var display = new game.Display(mapcanvas, canvas);
+            
+            
+            
+            
+            function dx(){
+                //	alert("dx");
+                display.info.x = display.info.x + 3;
+                display.info.y = display.info.y + 3;
+                display.draw();
+                //alert(display.info.x);
+                setTimeout("dx()", 30)
+            };
+            dx();
+        </script>
+    </body>
+</html>
