@@ -85,6 +85,7 @@
             
         }
         
+		// 生成地图为一个Canvas图片，而这个地图都是静态，这样就节省CPU计算。
         this.createMapImg = function(){
             for (var j = 0; j < mapdata.length; j++) {
                 var hang = mapdata[j];
@@ -118,8 +119,8 @@
     game.Display = function(mapcanvas_, canvas_){
     
     
-        var canvas,mapcanvas;
-		canvas = canvas_;
+        var canvas, mapcanvas;
+        canvas = canvas_;
         var cxt = canvas.getContext('2d');
         mapcanvas = mapcanvas_
         
@@ -131,7 +132,10 @@
         
         // 绘制屏幕
         this.draw = function(){
-            //alert(mapcanvas.width);
+            cxt.fillStyle = "white";
+            var clearWidth = parseInt(canvas.width);
+            var clearHeight = parseInt(canvas.width);
+            cxt.fillRect(0, 0, clearWidth, clearHeight);
             cxt.drawImage(mapcanvas, this.info.x, this.info.y, canvas.width, canvas.height, 0, 0, canvas.width, canvas.height);
         }
         
