@@ -139,7 +139,7 @@
             cxt.drawImage(mapcanvas, this.info.x, this.info.y, canvas.width, canvas.height, 0, 0, canvas.width, canvas.height);
         }
         
-        
+
         
     }
     

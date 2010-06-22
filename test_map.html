@@ -3,15 +3,19 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <script type="text/javascript" src="core.js">
         </script>
+        <style>
+            #game {
+                border-style: solid;
+                border-right-width: 1px;
+				border-bottom-width: 1px;
+            }
+        </style>
     </head>
-    <body>
+    <body style="margin:0;">
         <canvas id="game" width="500" height="500">
         </canvas>
         <canvas id="map" style="display:none" width="2000" height="2000">
-        </canvas>
-        <div id="model" style="width:100px">
-            <img src="resource/model01.png" id="model01" />
-        </div>
+        </canvas>        
         <script>
         </script>
         <script>
@@ -57,18 +61,59 @@
             
             var display = new game.Display(mapcanvas, canvas);
             
+            var JSX, JSY;
+            JSX = 0;
+            JSY = 0;
+            canvas.onmouseover = function(e){
+                //alert(0 < e.clientX < 30);
+                if (e.clientX > 0 && e.clientX < 30) 
+                    JSX = -3;
+                if (e.clientY > 0 && e.clientY < 30) 
+                    JSY = -3;
+                if (e.clientX > 470 && e.clientX < 500) 
+                    JSX = 3;
+                if (e.clientY > 470 && e.clientY < 500) 
+                    JSY = 3;
+                if (e.clientX > 31 && e.clientX < 470) 
+                    JSX = 0;
+                if (e.clientY > 31 && e.clientY < 470) 
+                    JSY = 0;
+                
+                
+            }
             
-            
+			 canvas.onmouseout = function(e){
+			    JSX =0 ; JSY = 0;
+			 }
+			
+            canvas.onmousemove = function(e){
+                //alert(0 < e.clientX < 30);
+               if (e.clientX > 0 && e.clientX < 30) 
+                    JSX = -3;
+                if (e.clientY > 0 && e.clientY < 30) 
+                    JSY = -3;
+                if (e.clientX > 470 && e.clientX < 500) 
+                    JSX = 3;
+                if (e.clientY > 470 && e.clientY < 500) 
+                    JSY = 3;
+                if (e.clientX > 31 && e.clientX < 470) 
+                    JSX = 0;
+                if (e.clientY > 31 && e.clientY < 470) 
+                    JSY = 0;
+                //alert(JSY);
+            }
             
             function dx(){
-                //	alert("dx");
-                display.info.x = display.info.x + 2;
-                display.info.y = display.info.y + 2;
+                // alert(JSX);
+                display.info.x = display.info.x + JSX < 0 ? 0 : display.info.x + JSX;
+                display.info.y = display.info.y + JSY < 0 ? 0 : display.info.y + JSY;
                 display.draw();
                 //alert(display.info.x);
                 setTimeout("dx()", 40)
             };
             dx();
         </script>
+		<br>
+		<div style="padding:9px;">把鼠标放在画布四周边缘和四脚，可以控制遍历地图的体验。</div>
     </body>
 </html>
