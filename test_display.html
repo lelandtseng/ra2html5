@@ -4,11 +4,8 @@
         <script type="text/javascript" src="core.js">
         </script>
     </head>
-    <body style="margin:0;">
+    <body style="margin:0;" onKeyDown="myKeyDown(event);">
         <script>
-            
-            
-            
             var ss = new ra.Screen();
             var world = new ra.World(5, 5000, 5000);
             var graphics = new ra.Graphics(ss, world);
@@ -26,7 +23,7 @@
             t2.img = img2;
             t2.size = 20;
             
-            world.addTile(0, 0, t);
+            world.addTile(30, 30, t);
            
             graphics.createTileLayoutData();
             var b = graphics.createShowData()
@@ -109,12 +106,17 @@
              
              */
             function up(){
-				 world.addTile(3, 3, t2);
-                ss.setX(ss.getX() + 2);
-                ss.setY(ss.getY() + 2);
+		//world.addTile(30, 30, t2);
+                ss.setX(ss.getX());
+                ss.setY(ss.getY());
+                //alert(ss.getX()+":"+ss.getY());
                 graphics.updateLayoutData();
                 var b2 = graphics.createShowData()
                 ss.putShowData(b2);
+            }
+            function myKeyDown(event){
+                if(event.keyCode == '13')
+                    up();
             }
         </script>
         <br>
@@ -123,6 +125,10 @@
             <button onclick="up()">
                 变化
             </button>
+            (或者敲回车键)
+        </div>
+        <div id="color">
+            
         </div>
     </body>
 </html>

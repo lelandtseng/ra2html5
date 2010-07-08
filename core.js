@@ -55,7 +55,7 @@
                     }
                 }
             }
-            //	alert("ii="+ii+"jj="+jj);
+        //	alert("ii="+ii+"jj="+jj);
         }
         
         /**
@@ -110,7 +110,7 @@
                 }
             }
             var et = new Date().getTime();
-            //alert(et - st);alert("ii="+ii+"jj="+jj);
+        //alert(et - st);//alert("ii="+ii+"jj="+jj);
         }
     }
     
@@ -137,8 +137,51 @@
         container.style.height = 560;
         var body = document.body;
         body.appendChild(container);
-        
+      
         var x = 0, y = 0; // Screen在所在世界的方位，这是左上角位置的坐标
+
+        function move(ex,ey){
+            var cl = document.getElementById("color");
+            if (ex > 0 && ex < 30)
+                x = x-3;
+            if (ey > 0 && ey < 30)
+                y = y-3;
+            if (ex > 530 && ex < 560)
+                x = x+3;
+            if (ey > 530 && ey < 560)
+                y = y+3;
+            if (ex > 31 && ex < 530)
+                x = x;
+            if (ey > 31 && ey < 530)
+                y = y;
+            if (x < 0 ) x = 0;
+            if (y < 0 ) y = 0;
+            cl.innerHTML = x + ":" + y;
+        }
+
+        var interval = null;
+
+        container.addEventListener('mouseover', function(e){
+            var ex = e.clientX;
+            var ey = e.clientY;
+            interval = setInterval(function(){
+                move(ex,ey);
+            }, 200)
+        },false)
+
+        container.addEventListener('mouseout', function(e){
+            clearInterval(interval);
+        },false)
+
+        container.addEventListener('mousemove', function(e){
+            var ex = e.clientX;
+            var ey = e.clientY;
+            clearInterval(interval);
+            interval = setInterval(function(){
+                move(ex,ey);
+            }, 20)
+        },false)
+
         this.getX = function(){
             return x;
         }
@@ -246,17 +289,17 @@
                 }
             }
             else 
-                if (tileData[y][x] != null) {
-                    var wz = tileData[y][x];
-                    var xx = wz.x;
-                    var yy = wz.y;
-                    var com = tileData[yy][xx]
-                    for (var i = 0; i < com.size; i++) {
-                        for (var j = 0; j < com.size; j++) {
-                            tileData[yy + i][xx + j] = null;
-                        }
+            if (tileData[y][x] != null) {
+                var wz = tileData[y][x];
+                var xx = wz.x;
+                var yy = wz.y;
+                var com = tileData[yy][xx]
+                for (var i = 0; i < com.size; i++) {
+                    for (var j = 0; j < com.size; j++) {
+                        tileData[yy + i][xx + j] = null;
                     }
                 }
+            }
         }
         
         /**
