@@ -55,7 +55,7 @@
                     }
                 }
             }
-        //	alert("ii="+ii+"jj="+jj);
+            //	alert("ii="+ii+"jj="+jj);
         }
         
         /**
@@ -110,7 +110,7 @@
                 }
             }
             var et = new Date().getTime();
-        //alert(et - st);//alert("ii="+ii+"jj="+jj);
+            //  alert(et - st);alert("ii="+ii+"jj="+jj);
         }
     }
     
@@ -121,7 +121,7 @@
      */
     ra.Screen = function(){
     
-        var canvas = document.createElement('canvas');
+            var canvas = document.createElement('canvas');
         canvas.id = "game";
         canvas.width = 500;
         canvas.height = 500;
@@ -181,7 +181,7 @@
                 move(ex,ey);
             }, 20)
         },false)
-
+		
         this.getX = function(){
             return x;
         }
@@ -205,6 +205,8 @@
         this.getHeight = function(){
             return 500;
         }
+        
+       
         /**
          * 推入显示数据
          * @param {Object} data
@@ -235,6 +237,8 @@
         }
         
     }
+    
+
     
     /**
      * 红警游戏世界
@@ -289,17 +293,17 @@
                 }
             }
             else 
-            if (tileData[y][x] != null) {
-                var wz = tileData[y][x];
-                var xx = wz.x;
-                var yy = wz.y;
-                var com = tileData[yy][xx]
-                for (var i = 0; i < com.size; i++) {
-                    for (var j = 0; j < com.size; j++) {
-                        tileData[yy + i][xx + j] = null;
+                if (tileData[y][x] != null) {
+                    var wz = tileData[y][x];
+                    var xx = wz.x;
+                    var yy = wz.y;
+                    var com = tileData[yy][xx]
+                    for (var i = 0; i < com.size; i++) {
+                        for (var j = 0; j < com.size; j++) {
+                            tileData[yy + i][xx + j] = null;
+                        }
                     }
                 }
-            }
         }
         
         /**
@@ -353,8 +357,8 @@
         this.canArm = true;
         // 大小
         this.size = 5;
-    }
-    
+    }    	
+
 })();
 
 
