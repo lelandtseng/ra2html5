@@ -44,25 +44,25 @@
          * 生成整个底层地图大图片，储存在tileCanvas里。
          */
         this.createTileLayoutData = function(){
-        //  var ii = 0,jj = 0;
+            //  var ii = 0,jj = 0;
             for (var j = 0; j < world.getTileData().length; j++) {
-		//		ii++;
+                //		ii++;
                 var hang = world.getTileData()[j];
                 for (var i = 0; i < hang.length; i++) {
-		//			jj++;
+                    //			jj++;
                     if (hang[i] instanceof ra.Tile) {
                         tileCanvas.getContext('2d').drawImage(hang[i].img, j * world.getUnitSize(), i * world.getUnitSize(), hang[i].size * world.getUnitSize(), hang[i].size * world.getUnitSize());
                     }
                 }
             }
-		//	alert("ii="+ii+"jj="+jj);
+            //	alert("ii="+ii+"jj="+jj);
         }
         
         /**
          * 局部更新地图
          */
         this.updateLayoutData = function(){
-			var st = new Date().getTime();
+            var st = new Date().getTime();
             var x = Math.floor(screen.getX() / world.getUnitSize() - 2);
             var y = Math.floor(screen.getY() / world.getUnitSize() - 2);
             if (x < 0) 
@@ -71,31 +71,46 @@
                 y = 0;
             var h = screen.getWidth() / world.getUnitSize() + 2;
             var w = screen.getHeight() / world.getUnitSize() + 2;
-			
-			tileCanvas.getContext('2d').clearRect(x,y,screen.getWidth(),screen.getHeight());
-			
-			//alert("h="+h+"w="+w+"y="+y+"x="+x);
+            
+            tileCanvas.getContext('2d').clearRect(x, y, screen.getWidth(), screen.getHeight());
+            
+            //alert("h="+h+"w="+w+"y="+y+"x="+x);
             var tileData = world.getTileData();
-			var ii = 0,jj = 0;
+            var ii = 0, jj = 0;
             for (var j = y; j < h + y; j++) {
+            
+            
+            
+            
                 var hang = tileData[j];
                 ii++;
                 for (var i = x; i < w + x; i++) {
-					jj++;
+                    jj++;
                     try {
                         if (hang[i] != 'undefined') {
+                        
+                            if (j == y || i == x) {
+                                if (hang[i].x) {
+                                    var tileold = tileData[hang[i].y][hang[i].x];
+                                    if (tileold instanceof ra.Tile) {
+                                        tileCanvas.getContext('2d').drawImage(tileold.img, hang[i].y * world.getUnitSize(), hang[j].x * world.getUnitSize(), tileold.size * world.getUnitSize(), tileold.size * world.getUnitSize());
+                                    }
+                                }
+                            }
+                            
                             if (hang[i] instanceof ra.Tile) {
                                 tileCanvas.getContext('2d').drawImage(hang[i].img, j * world.getUnitSize(), i * world.getUnitSize(), hang[i].size * world.getUnitSize(), hang[i].size * world.getUnitSize());
                             }
                         }
-                    }catch(e){
-						
-					}
+                    } 
+                    catch (e) {
+                    
+                    }
                     
                 }
             }
-			var et = new Date().getTime();
-			//alert(et - st);alert("ii="+ii+"jj="+jj);
+            var et = new Date().getTime();
+            //alert(et - st);alert("ii="+ii+"jj="+jj);
         }
     }
     
