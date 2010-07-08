@@ -1,0 +1,128 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <script type="text/javascript" src="core.js">
+        </script>
+    </head>
+    <body style="margin:0;">
+        <script>
+            
+            
+            
+            var ss = new ra.Screen();
+            var world = new ra.World(5, 5000, 5000);
+            var graphics = new ra.Graphics(ss, world);
+            ss.setX(10);
+            ss.setY(20);
+            var t = new ra.Tile();
+            var img = new Image();
+            img.src = 'resource/model01.png';
+            var img2 = new Image();
+            img2.src = 'resource/model02.png';
+            t.img = img;
+            t.size = 20;
+            
+            var t2 = new ra.Tile();
+            t2.img = img2;
+            t2.size = 20;
+            
+            world.addTile(0, 0, t);
+           
+            graphics.createTileLayoutData();
+            var b = graphics.createShowData()
+            ss.putShowData(b);
+            /**
+             
+             
+             
+             var canvas = new ra.Screen();
+             
+             
+             
+             var world = new ra.World(5, 500, 500);
+             
+             
+             
+             var tile = new ra.Tile();
+             
+             
+             
+             var t2 = new ra.Tile();
+             
+             
+             
+             t2.img = 'abc.jpg';
+             
+             
+             
+             tile.img = 'inv_branual_en.jpg';
+             
+             
+             
+             world.addTile(0, 0, tile);
+             
+             
+             
+             world.addTile(0, 0, t2);
+             
+             
+             
+             //测试ra.World类的addTile方法
+             
+             
+             
+             alert(world.getTile(0, 0).img + '0'); //应该返回'inv_branual_en.jpg'
+             
+             
+             
+             //测试ra.World类的getTile方法
+             
+             
+             
+             alert(world.getTile(0, 0).img + '1'); //应该返回'inv_branual_en.jpg'
+             
+             
+             
+             alert(world.getTile(1, 2).img + '2'); //应该返回'inv_branual_en.jpg'
+             
+             
+             
+             alert(world.getTile(4, 4).img + '3'); //应该返回'inv_branual_en.jpg'
+             
+             
+             
+             alert(world.getTile(5, 5) == null); //应该返回'true'
+             
+             
+             
+             //测试ra.World类的deleteTile方法
+             
+             
+             
+             world.deleteTile(1, 2); //应该能删除
+             
+             
+             
+             alert(world.getTile(0, 0) == null); //应该放回'true'
+             
+             
+             
+             */
+            function up(){
+				 world.addTile(3, 3, t2);
+                ss.setX(ss.getX() + 2);
+                ss.setY(ss.getY() + 2);
+                graphics.updateLayoutData();
+                var b2 = graphics.createShowData()
+                ss.putShowData(b2);
+            }
+        </script>
+        <br>
+        <div style="padding:9px;">
+            把鼠标放在画布四周边缘和四脚，可以控制遍历地图的体验。
+            <button onclick="up()">
+                变化
+            </button>
+        </div>
+    </body>
+</html>

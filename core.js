@@ -1,146 +1,302 @@
 (function(){
-
-    /* 命名空间 */
-    game = {}
+    ra = {}
     
-    /*
-     游戏地图
-     width 地图宽度
-     height 地图高度
-     unit_size 单元大小(像素)
+    /**
+     * 游戏显卡，用于生成Screen要显示的图像，并将生成的图像向Screen。
      */
-    game.Map = function(unit_size, canvas){
-        var canvas_, cxt;
-        canvas_ = canvas;
-        cxt = canvas.getContext('2d');
-        var mapdata, this_unit_size;
-        mapdata = null
-        this_unit_size = unit_size;
-        // begin  生成地图数组
-        mapdata = new Array();
-        for (var i = 0; i < canvas.height / this_unit_size; i++) {
-            mapdata[i] = new Array();
-            for (var j = 0; j < canvas.width / this_unit_size; j++) {
-                mapdata[i][j] = null;
+    ra.Graphics = function(_screen, _world){
+    
+        var world = _world;
+        
+        
+        // var buildData = world.getBuildData();  暂时没有
+        // var armData = world.getArmData();  暂时没有
+        var screen = _screen; // 显示器
+        // tile层canvas
+        var tileCanvas = document.createElement('canvas');
+        tileCanvas.id = "tileLayout";
+        tileCanvas.style.display = 'none';
+        tileCanvas.width = world.getWidth();
+        tileCanvas.height = world.getHeight();
+        //buffer
+        var buffer = document.createElement('canvas');
+        buffer.id = "buffer";
+        buffer.style.display = 'none';
+        buffer.width = screen.getWidth();
+        buffer.height = screen.getHeight();
+        
+        
+        /**
+         * 生成屏幕显示的数据
+         */
+        this.createShowData = function(bool){
+            if (bool) {
+                updateLayoutData();
+            }
+            else {
+                buffer.getContext('2d').clearRect(0, 0, screen.getWidth(), screen.getHeight());
+                buffer.getContext('2d').drawImage(tileCanvas, screen.getX(), screen.getY(), screen.getWidth(), screen.getHeight(), 0, 0, screen.getWidth(), screen.getHeight())
+            }
+            return buffer;
+        }
+        
+        /**
+         * 生成整个底层地图大图片，储存在tileCanvas里。
+         */
+        this.createTileLayoutData = function(){
+        //  var ii = 0,jj = 0;
+            for (var j = 0; j < world.getTileData().length; j++) {
+		//		ii++;
+                var hang = world.getTileData()[j];
+                for (var i = 0; i < hang.length; i++) {
+		//			jj++;
+                    if (hang[i] instanceof ra.Tile) {
+                        tileCanvas.getContext('2d').drawImage(hang[i].img, j * world.getUnitSize(), i * world.getUnitSize(), hang[i].size * world.getUnitSize(), hang[i].size * world.getUnitSize());
+                    }
+                }
+            }
+		//	alert("ii="+ii+"jj="+jj);
+        }
+        
+        /**
+         * 局部更新地图
+         */
+        this.updateLayoutData = function(){
+			var st = new Date().getTime();
+            var x = Math.floor(screen.getX() / world.getUnitSize() - 2);
+            var y = Math.floor(screen.getY() / world.getUnitSize() - 2);
+            if (x < 0) 
+                x = 0;
+            if (y < 0) 
+                y = 0;
+            var h = screen.getWidth() / world.getUnitSize() + 2;
+            var w = screen.getHeight() / world.getUnitSize() + 2;
+			
+			tileCanvas.getContext('2d').clearRect(x,y,screen.getWidth(),screen.getHeight());
+			
+			//alert("h="+h+"w="+w+"y="+y+"x="+x);
+            var tileData = world.getTileData();
+			var ii = 0,jj = 0;
+            for (var j = y; j < h + y; j++) {
+                var hang = tileData[j];
+                ii++;
+                for (var i = x; i < w + x; i++) {
+					jj++;
+                    try {
+                        if (hang[i] != 'undefined') {
+                            if (hang[i] instanceof ra.Tile) {
+                                tileCanvas.getContext('2d').drawImage(hang[i].img, j * world.getUnitSize(), i * world.getUnitSize(), hang[i].size * world.getUnitSize(), hang[i].size * world.getUnitSize());
+                            }
+                        }
+                    }catch(e){
+						
+					}
+                    
+                }
+            }
+			var et = new Date().getTime();
+			//alert(et - st);alert("ii="+ii+"jj="+jj);
+        }
+    }
+    
+    
+    /**
+     * 显示器
+     * @param _canvas
+     */
+    ra.Screen = function(){
+    
+        var canvas = document.createElement('canvas');
+        canvas.id = "game";
+        canvas.width = 500;
+        canvas.height = 500;
+        canvas.style.margin = 30; //这里可以修改为 new ra.Screen.x / new ra.Screen.y
+        canvas.style.border = '1px solid #000000';
+        var cxt = canvas.getContext('2d');
+        var container = document.createElement('div');
+        container.id = 'container';
+        container.appendChild(canvas);
+        container.style.border = '1px solid gray';
+        container.style.background = '#FFFF00';
+        container.style.width = 560;
+        container.style.height = 560;
+        var body = document.body;
+        body.appendChild(container);
+        
+        var x = 0, y = 0; // Screen在所在世界的方位，这是左上角位置的坐标
+        this.getX = function(){
+            return x;
+        }
+        
+        this.setX = function(_x){
+            x = _x;
+        }
+        
+        this.getY = function(){
+            return y;
+        }
+        
+        this.setY = function(_y){
+            y = _y;
+        }
+        
+        this.getWidth = function(){
+            return 500;
+        }
+        
+        this.getHeight = function(){
+            return 500;
+        }
+        /**
+         * 推入显示数据
+         * @param {Object} data
+         */
+        this.putShowData = function(data){
+            showData = data;
+            paint();
+        }
+        
+        // 绘制屏幕
+        paint = function(){
+            cxt.clearRect(0, 0, canvas.width, canvas.height);
+            cxt.drawImage(showData, 0, 0);
+        }
+        
+        /**
+         * 抓平功能
+         */
+        this.screenshots = function(){
+            return showData;
+        }
+        
+        /**
+         * get canvas.
+         */
+        this.getCanvas = function(){
+            return canvas;
+        }
+        
+    }
+    
+    /**
+     * 红警游戏世界
+     * unitSize 单元格大小
+     *
+     */
+    ra.World = function(_unitSize, _width, _height){
+    
+        var unitSize = _unitSize;
+        var width = _width;
+        var height = _height;
+        
+        var tileData = new Array(); // 最低层的地表瓦块二维数据
+        var buildData = new Array(); // tile之上的建筑物层的二维数据
+        var armData = new Array(); // 最上层的武器层，例如坦克，军人等
+        for (var i = 0; i < height / unitSize; i++) {
+            tileData[i] = buildData[i] = armData[i] = new Array();
+            for (var j = 0; j < width / unitSize; j++) {
+                tileData[i][j] = buildData[i][j] = armData[i][j] = null;
             }
         }
-        // 得到地图宽度
-        this.getWidth = function(){
-            return canvas_.width;
-        }
         
-        // 得到地图高度
-        this.getHeight = function(){
-            return canvas_.height;
-        }
-        
-        // 得到地图单元大小
-        this.getUnitSize = function(){
-            return this_unit_size;
-        }
-        
-        // 得到地图数据
-        this.getData = function(){
-            return mapdata;
-        }
-        
-        // 为地图添加部件
-        this.addComp = function(x, y, comp){
-        
-            for (var i = 0; i < comp.size; i++) {
-                for (var j = 0; j < comp.size; j++) {
-                    // alert("i=>"+i+"  "+"j=>"+j);
-                    mapdata[y + i][x + j] = {
+        /**
+         * 为游戏世界的地图添加底层瓦块
+         */
+        this.addTile = function(x, y, tile){
+            for (var i = 0; i < tile.size; i++) {
+                for (var j = 0; j < tile.size; j++) {
+                    if (!(tileData[y + i][x + j] == null)) {
+                        this.deleteTile(x + j, y + i);
+                    }
+                    tileData[y + i][x + j] = {
                         'x': x,
                         'y': y
                     };
                 }
             }
-            mapdata[y][x] = comp;
+            tileData[y][x] = tile;
         }
-        // 删除地图的部件
-        this.deleteComp = function(x, y, comp){
         
-            if (mapdata[y][x] instanceof game.Comp) {
-                //mapdata[y][x] = null;
-                var com = mapdata[y][x]
+        /**
+         * 删除底层瓦块
+         */
+        this.deleteTile = function(x, y){
+        
+            if (tileData[y][x] instanceof ra.Tile) {
+                var com = tileData[y][x]
                 for (var i = 0; i < com.size; i++) {
                     for (var j = 0; j < com.size; j++) {
-                        mapdata[y + i][x + j] = null;
+                        tileData[y + i][x + j] = null;
                     }
                 }
             }
             else 
-                if (mapdata[y][x] != null) {
-                    var wz = mapdata[y][x];
+                if (tileData[y][x] != null) {
+                    var wz = tileData[y][x];
                     var xx = wz.x;
                     var yy = wz.y;
-                    var com = mapdata[yy][xx]
+                    var com = tileData[yy][xx]
                     for (var i = 0; i < com.size; i++) {
                         for (var j = 0; j < com.size; j++) {
-                            mapdata[yy + i][xx + j] = null;
+                            tileData[yy + i][xx + j] = null;
                         }
                     }
                 }
-            
         }
         
-		// 生成地图为一个Canvas图片，而这个地图都是静态，这样就节省CPU计算。
-        this.createMapImg = function(){
-            for (var j = 0; j < mapdata.length; j++) {
-                var hang = mapdata[j];
-                
-                for (var i = 0; i < hang.length; i++) {
-                    if (hang[i] instanceof game.Comp) {
-                        cxt.drawImage(hang[i].img_current, j * this_unit_size, i * this_unit_size, hang[i].size * this_unit_size, hang[i].size * this_unit_size);
-                    }
+        /**
+         * 根据坐标得到底层瓦块
+         */
+        this.getTile = function(x, y){
+            var c = tileData[y][x];
+            if (c != null) {
+                if (c instanceof ra.Tile) {
+                    return c;
+                }
+                else {
+                    return this.getTile(c.x, c.y);
                 }
             }
+            return null;
         }
-    }
-    
-    /* 游戏部件 */
-    game.Comp = function(){
-        this.size = 5; //   组件大小 ;  实际像素大小为 ： map.unitSize * size
-        this.img_east = null;
-        this.img_south = null;
-        this.img_west = null;
-        this.img_north = null;
-        this.img_north_west = null;
-        this.img_north_east = null;
-        this.img_south_west = null;
-        this.img_south_east = null;
-        this.img_current = null;
+        
+        /**
+         * 得到世界单元格大小
+         */
+        this.getUnitSize = function(){
+            return unitSize;
+        }
+        
+        /**
+         * 地表层的二维数组数据
+         */
+        this.getTileData = function(){
+            return tileData;
+        }
+        
+        this.getWidth = function(){
+            return width;
+        }
+        
+        this.getHeight = function(){
+            return height;
+        }
     }
     
     /**
-     * 屏幕
+     * 构成地形的瓦块
      */
-    game.Display = function(mapcanvas_, canvas_){
-    
-    
-        var canvas, mapcanvas;
-        canvas = canvas_;
-        var cxt = canvas.getContext('2d');
-        mapcanvas = mapcanvas_
-        
-        //参照点 是像素表示，不是单元格
-        this.info = {
-            x: 0,
-            y: 0
-        };
-        
-        // 绘制屏幕
-        this.draw = function(){
-            cxt.fillStyle = "white";
-            var clearWidth = parseInt(canvas.width);
-            var clearHeight = parseInt(canvas.width);
-            cxt.fillRect(0, 0, clearWidth, clearHeight);
-            cxt.drawImage(mapcanvas, this.info.x, this.info.y, canvas.width, canvas.height, 0, 0, canvas.width, canvas.height);
-        }
-        
-
-        
+    ra.Tile = function(){
+        // 瓦块图片
+        this.img = null;
+        // 是否可以被建筑
+        this.canBuild = true;
+        // 是否可以被军人在其之上
+        this.canArm = true;
+        // 大小
+        this.size = 5;
     }
     
 })();
+
+
