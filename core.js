@@ -125,7 +125,7 @@
         canvas.id = "game";
         canvas.width = 500;
         canvas.height = 500;
-        canvas.style.margin = 30; //这里可以修改为 new ra.Screen.x / new ra.Screen.y
+        canvas.style.margin = 30;
         canvas.style.border = '1px solid #000000';
         var cxt = canvas.getContext('2d');
         var container = document.createElement('div');
@@ -141,6 +141,7 @@
       
         var x = 0, y = 0; // Screen在所在世界的方位，这是左上角位置的坐标
 
+        // 返回container
         this.getContainer = function(){
             return container;
         }
