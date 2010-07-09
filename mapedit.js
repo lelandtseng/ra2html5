@@ -49,7 +49,7 @@
 					 
 				
             }
-            str = str + "}"
+            str = str.deleteCharAt(str.lastIndexOf(",")) + "}"
 			return str;
         }
         
