@@ -20,7 +20,7 @@
             screen.putShowData(bbb);
         }
         
-<<<<<<< HEAD
+
 		/**
 		 * 生成地图数据
 		 */
@@ -46,8 +46,7 @@
 		/**
 		 * 生成地图数据
 		 */
-=======
->>>>>>> 370747dd164363ca1de686f11bd497e13638c9e7
+
         this.exportTileData = function(){
             var data = world.getTileData();
             var str = "{";
@@ -57,10 +56,7 @@
                         ;
                     else 
                         if (data[i][j] instanceof ra.Tile) {
-<<<<<<< HEAD
-							
-=======
->>>>>>> 370747dd164363ca1de686f11bd497e13638c9e7
+
                             str = str + "p_" + i + "_" + j + ":{" +
                             "img:'" +
                             data[i][j].img.src +
