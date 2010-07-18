@@ -1,0 +1,88 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <script type="text/javascript" src="core.js">
+        </script>
+        <script type="text/javascript" src="mapedit.js">
+        </script>
+        <script type="text/javascript" src="screenmove.js">
+        </script>
+    </head>
+    <body style="margin:0;" onKeyDown="myKeyDown(event);">
+        <script>
+            var ss = new ra.Screen();
+            var world = new ra.World(5, 5000, 5000);
+            var graphics = new ra.Graphics(ss, world);
+            ss.setX(10);
+            ss.setY(20);
+            var t = new ra.Tile();
+            var img = new Image();
+            img.src = 'resource/model01.png';
+            var img2 = new Image();
+            img2.src = 'resource/model02.png';
+            t.img = img;
+            t.size = 20;
+                        
+            var t2 = new ra.Tile();
+            t2.img = img2;
+            t2.size = 20;
+                        
+            world.addTile(30, 30, t);
+                        
+            graphics.createTileLayoutData();
+            var b = graphics.createShowData()
+            ss.putShowData(b);
+                   
+            function up(){
+                //world.addTile(30, 30, t2);
+                //ss.setX(ss.getX());
+                //ss.setY(ss.getY());
+                //alert(ss.getX()+":"+ss.getY());
+                graphics.updateLayoutData();
+                var b2 = graphics.createShowData();
+                ss.putShowData(b2);
+            }
+                        
+            function myKeyDown(event){
+                if (event.keyCode == '13')
+                    up();
+            }
+
+            var screenMove = new ra.ScreenMove(ss);
+                        
+            var edt = new ra.MapEditor(world, ss, graphics);
+            			
+            function eee(){
+                var s = edt.exportTileData();
+                document.getElementById('txt').value = s;
+            }
+			
+			function eeei(){
+				var ss = document.getElementById('txt').value;
+				edt.importTileData(ss);
+			}
+            			
+            			
+                    
+        </script>
+        <br>
+        <div style="float:right">
+            <div style="padding:9px;">
+                把鼠标放在画布四周边缘和四脚，可以控制遍历地图的体验。
+                <button onclick="up()">
+                    变化
+                </button>
+                <button onclick="eee()">
+                    导出地图数据
+                </button>
+				  <button onclick="eeei()">
+                    导入地图数据
+                </button>
+                (或者敲回车键)
+            </div>
+            <div id="color">
+            </div>
+            <textarea id="txt" cols="60" rows="20"></textarea>
+        </div>
+    </body>
+</html>
