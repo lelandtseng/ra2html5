@@ -54,6 +54,7 @@
                         ;
                     else 
                         if (data[i][j] instanceof ra.Tile) {
+							
                             str = str + "p_" + i + "_" + j + ":{" +
                             "img:'" +
                             data[i][j].img.src +
