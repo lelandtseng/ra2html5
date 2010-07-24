@@ -68,16 +68,16 @@
          */
         this.updateLayoutData = function(){
             var st = new Date().getTime();
-            var x = Math.floor(screen.getX() / world.getUnitSize() - 2);
-            var y = Math.floor(screen.getY() / world.getUnitSize() - 2);
+            var x = Math.floor(screen.getX() / world.getUnitSize()) - 2;
+            var y = Math.floor(screen.getY() / world.getUnitSize()) - 2;
             if (x < 0) 
                 x = 0;
             if (y < 0) 
                 y = 0;
-            var h = screen.getWidth() / world.getUnitSize() + 2;
-            var w = screen.getHeight() / world.getUnitSize() + 2;
+            var h = Math.floor(screen.getWidth() / world.getUnitSize()) + 10;
+            var w = Math.floor(screen.getHeight() / world.getUnitSize()) +10;
             
-            tileCanvas.getContext('2d').clearRect(x, y, screen.getWidth(), screen.getHeight());
+            tileCanvas.getContext('2d').clearRect(screen.getX(), screen.getY(), screen.getWidth()+20, screen.getHeight()+20);
             
             //alert("h="+h+"w="+w+"y="+y+"x="+x);
             var tileData = world.getTileData();
