@@ -285,6 +285,15 @@
             }
             return null;
         }
+		
+		/**
+		 * 根据实际坐标得到底层瓦块
+		 */
+		this.getTile2 = function(x,y){
+			var cx = Math.floor(x / this.getUnitSize());
+			var cy = Math.floor(y / this.getUnitSize());
+			this.getTile(cx,cy);
+		}
         
         /**
          * 得到世界单元格大小

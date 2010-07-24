@@ -1,5 +1,7 @@
 (function(){
+
     ra.MapEditor = function(_world, _screen, _graphics){
+        var ct = null;
         var world = _world;
         var screen = _screen;
         var graphics = _graphics;
@@ -19,6 +21,34 @@
             screen.putShowData(bbb);
         }
         
+        screencanvas.onmousemove = function(e){
+            //var x = screen.getX() + e.clientX - 30;
+            //var y = screen.getY() + e.clientY - 30;
+            
+            
+            var bbb = graphics.createShowData();
+			
+			//绘制阴影
+			var cxt = bbb.getContext('2d');
+			cxt.fillStyle = "red";
+			cxt.fillRect(e.clientX-30,e.clientY-30,50,50);
+            screen.putShowData(bbb);
+            
+        }
+        
+        /**
+         * 当前使用的Tile
+         */
+        this.getUseTile = function(){
+            return ct;
+        }
+        
+        /**
+         * 设置当前使用的Tile
+         */
+        this.setUseTile = function(t){
+            ct = t;
+        }
         
         /**
          * 生成地图数据
@@ -72,6 +102,8 @@
             str = str.slice(0, -1) + "}"
             return str;
         }
+        
+        
         
     }
 })();
