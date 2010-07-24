@@ -20,33 +20,33 @@
             screen.putShowData(bbb);
         }
         
-
-		/**
-		 * 生成地图数据
-		 */
-		this.importTileData = function(data){
-			var jsondata = eval('('+data+')');
-			for(var d in jsondata){
-				var d2 = d.toString();
-				ds = d2.split('_');
-				
-				if(jsondata[d].img){
-					var t = new ra.Tile();
-					var img = new Image();
-					img.src = jsondata[d].img;
-					t.img = img;
-					t.size = jsondata[d].size;
-					world.addTile(parseInt(ds[1]),parseInt(ds[2]),t);
-				}else{
-					
-				}
-			}
-		}
-		
-		/**
-		 * 生成地图数据
-		 */
-
+        
+        /**
+         * 生成地图数据
+         */
+        this.importTileData = function(data){
+            var jsondata = eval('(' + data + ')');
+            for (var d in jsondata) {
+                var d2 = d.toString();
+                ds = d2.split('_');
+                
+                if (jsondata[d].img) {
+                    var t = new ra.Tile();
+                    var img = new Image();
+                    img.src = 'resource/'+jsondata[d].img;
+                    t.img = img;
+                    t.size = jsondata[d].size;
+                    world.addTile(parseInt(ds[1]), parseInt(ds[2]), t);
+                }
+                else {
+                
+                }
+            }
+        }
+        
+        /**
+         * 生成地图数据
+         */
         this.exportTileData = function(){
             var data = world.getTileData();
             var str = "{";
@@ -56,29 +56,21 @@
                         ;
                     else 
                         if (data[i][j] instanceof ra.Tile) {
-
+                            var src = data[i][j].img.src.split('/').pop();;
                             str = str + "p_" + i + "_" + j + ":{" +
                             "img:'" +
-                            data[i][j].img.src +
+                            src +
                             "',size:" +
-                            data[i][j].size+
-                            "},"
-                        }
-                        else {
-                            str = str + "p_" + i + "_" + j + ":{" +
-                            "x:" +
-                            data[i][j].x +
-                            ",y:" +
-                            data[i][j].y +
+                            data[i][j].size +
                             "},"
                         }
                 }
-             
-					 
-				
+                
+                
+                
             }
             str = str.slice(0, -1) + "}"
-			return str;
+            return str;
         }
         
     }

@@ -1,3 +1,8 @@
+/**
+ * 
+ * @param {Object} _screen
+ * @param {Object} _world
+ */
 (function(){
     ra = {}
     
