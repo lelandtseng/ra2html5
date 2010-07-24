@@ -1,5 +1,5 @@
 /**
- * 
+ *
  * @param {Object} _screen
  * @param {Object} _world
  */
@@ -34,14 +34,10 @@
         /**
          * 生成屏幕显示的数据
          */
-        this.createShowData = function(bool){
-            if (bool) {
-                updateLayoutData();
-            }
-            else {
-                buffer.getContext('2d').clearRect(0, 0, screen.getWidth(), screen.getHeight());
-                buffer.getContext('2d').drawImage(tileCanvas, screen.getX(), screen.getY(), screen.getWidth(), screen.getHeight(), 0, 0, screen.getWidth(), screen.getHeight())
-            }
+        this.createShowData = function(){
+			this.updateLayoutData();
+            buffer.getContext('2d').clearRect(0, 0, screen.getWidth(), screen.getHeight());
+            buffer.getContext('2d').drawImage(tileCanvas, screen.getX(), screen.getY(), screen.getWidth(), screen.getHeight(), 0, 0, screen.getWidth(), screen.getHeight())
             return buffer;
         }
         
@@ -60,7 +56,7 @@
                     }
                 }
             }
-        //	alert("ii="+ii+"jj="+jj);
+            //	alert("ii="+ii+"jj="+jj);
         }
         
         /**
@@ -75,9 +71,9 @@
             if (y < 0) 
                 y = 0;
             var h = Math.floor(screen.getWidth() / world.getUnitSize()) + 10;
-            var w = Math.floor(screen.getHeight() / world.getUnitSize()) +10;
+            var w = Math.floor(screen.getHeight() / world.getUnitSize()) + 10;
             
-            tileCanvas.getContext('2d').clearRect(screen.getX(), screen.getY(), screen.getWidth()+20, screen.getHeight()+20);
+            tileCanvas.getContext('2d').clearRect(screen.getX(), screen.getY(), screen.getWidth() + 20, screen.getHeight() + 20);
             
             //alert("h="+h+"w="+w+"y="+y+"x="+x);
             var tileData = world.getTileData();
@@ -115,7 +111,7 @@
                 }
             }
             var et = new Date().getTime();
-        //  alert(et - st);alert("ii="+ii+"jj="+jj);
+            //  alert(et - st);alert("ii="+ii+"jj="+jj);
         }
     }
     
@@ -143,14 +139,13 @@
         container.style.cssFloat = 'left';
         var body = document.body;
         body.appendChild(container);
-      
+        
         var x = 0, y = 0; // Screen在所在世界的方位，这是左上角位置的坐标
-
         // 返回container
         this.getContainer = function(){
             return container;
         }
-		
+        
         this.getX = function(){
             return x;
         }
@@ -175,7 +170,7 @@
             return 500;
         }
         
-       
+        
         /**
          * 推入显示数据
          * @param {Object} data
@@ -207,7 +202,7 @@
         
     }
     
-
+    
     
     /**
      * 红警游戏世界
@@ -262,17 +257,17 @@
                 }
             }
             else 
-            if (tileData[y][x] != null) {
-                var wz = tileData[y][x];
-                var xx = wz.x;
-                var yy = wz.y;
-                var com = tileData[yy][xx]
-                for (var i = 0; i < com.size; i++) {
-                    for (var j = 0; j < com.size; j++) {
-                        tileData[yy + i][xx + j] = null;
+                if (tileData[y][x] != null) {
+                    var wz = tileData[y][x];
+                    var xx = wz.x;
+                    var yy = wz.y;
+                    var com = tileData[yy][xx]
+                    for (var i = 0; i < com.size; i++) {
+                        for (var j = 0; j < com.size; j++) {
+                            tileData[yy + i][xx + j] = null;
+                        }
                     }
                 }
-            }
         }
         
         /**
@@ -326,8 +321,8 @@
         this.canArm = true;
         // 大小
         this.size = 5;
-    }    	
-
+    }
+    
 })();
 
 

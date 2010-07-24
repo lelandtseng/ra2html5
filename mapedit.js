@@ -15,7 +15,6 @@
             //alert("x="+xx+"y="+yy+"t="+t.img.src);
             
             world.addTile(yy, xx, t);
-            graphics.updateLayoutData();
             var bbb = graphics.createShowData()
             screen.putShowData(bbb);
         }
@@ -33,7 +32,7 @@
                 if (jsondata[d].img) {
                     var t = new ra.Tile();
                     var img = new Image();
-                    img.src = 'resource/'+jsondata[d].img;
+                    img.src = 'resource/' + jsondata[d].img;
                     t.img = img;
                     t.size = jsondata[d].size;
                     world.addTile(parseInt(ds[2]), parseInt(ds[1]), t);
@@ -56,7 +55,8 @@
                         ;
                     else 
                         if (data[i][j] instanceof ra.Tile) {
-                            var src = data[i][j].img.src.split('/').pop();;
+                            var src = data[i][j].img.src.split('/').pop();
+                            ;
                             str = str + "p_" + i + "_" + j + ":{" +
                             "img:'" +
                             src +
