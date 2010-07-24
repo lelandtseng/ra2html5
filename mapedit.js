@@ -36,7 +36,7 @@
                     img.src = 'resource/'+jsondata[d].img;
                     t.img = img;
                     t.size = jsondata[d].size;
-                    world.addTile(parseInt(ds[1]), parseInt(ds[2]), t);
+                    world.addTile(parseInt(ds[2]), parseInt(ds[1]), t);
                 }
                 else {
                 
