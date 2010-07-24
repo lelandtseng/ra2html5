@@ -5,8 +5,8 @@
         var graphics = _graphics;
         var screencanvas = screen.getCanvas();
         screencanvas.onclick = function(e){
-            var xx = Math.round((screen.getX() + e.clientX - 30) / world.getUnitSize());
-            var yy = Math.round((screen.getY() + e.clientY - 30) / world.getUnitSize());
+            var xx = Math.floor((screen.getX() + e.clientX - 30) / world.getUnitSize());
+            var yy = Math.floor((screen.getY() + e.clientY - 30) / world.getUnitSize());
             var t = new ra.Tile();
             var img = new Image();
             img.src = 'resource/model01.png';

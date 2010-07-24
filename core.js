@@ -74,8 +74,8 @@
                 x = 0;
             if (y < 0) 
                 y = 0;
-            var h = screen.getWidth() / world.getUnitSize() + 2;
-            var w = screen.getHeight() / world.getUnitSize() + 2;
+            var h = Math.floor(screen.getWidth() / world.getUnitSize()) + 2;
+            var w = Math.floor(screen.getHeight() / world.getUnitSize()) + 2;
             
             tileCanvas.getContext('2d').clearRect(x, y, screen.getWidth(), screen.getHeight());
             
