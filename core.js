@@ -35,7 +35,7 @@
          * 生成屏幕显示的数据
          */
         this.createShowData = function(){
-            this.updateLayoutData();
+			this.updateLayoutData();
             buffer.getContext('2d').clearRect(0, 0, screen.getWidth(), screen.getHeight());
             buffer.getContext('2d').drawImage(tileCanvas, screen.getX(), screen.getY(), screen.getWidth(), screen.getHeight(), 0, 0, screen.getWidth(), screen.getHeight())
             return buffer;
@@ -285,15 +285,15 @@
             }
             return null;
         }
-        
-        /**
-         * 根据实际坐标得到底层瓦块
-         */
-        this.getTile2 = function(x, y){
-            var cx = Math.floor(x / this.getUnitSize());
-            var cy = Math.floor(y / this.getUnitSize());
-            this.getTile(cx, cy);
-        }
+		
+		/**
+		 * 根据实际坐标得到底层瓦块
+		 */
+		this.getTile2 = function(x,y){
+			var cx = Math.floor(x / this.getUnitSize());
+			var cy = Math.floor(y / this.getUnitSize());
+			this.getTile(cx,cy);
+		}
         
         /**
          * 得到世界单元格大小
@@ -332,31 +332,6 @@
         this.size = 5;
     }
     
-    /**
-     * 游戏图层
-     */
-    ra.Layout = function(){
-			this.tiles = [][]; // 砖瓦二维数组
-    }
-    
-    /**
-     * 为这个图层添加瓦块
-     */
-    ra.Layout.prototype.addTile = function(x, y, tile){
-    }
-    
-    /**
-     * 删除图层中瓦块
-     */
-    ra.Layout.prototype.deleteTile = function(x, y){
-    
-    }
-    
-    /**
-     * 根据坐标得到图层中的瓦块
-     */
-    ra.Layout.prototype.getTile = function(x, y){
-    }
 })();
 
 
