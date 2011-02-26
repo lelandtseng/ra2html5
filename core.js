@@ -13,7 +13,6 @@
     
         var world = _world;
         
-        
         // var buildData = world.getBuildData();  暂时没有
         // var armData = world.getArmData();  暂时没有
         var screen = _screen; // 显示器
