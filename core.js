@@ -1,12 +1,26 @@
 
 (function(){
 
-    ra = {}
+    game = {}
     
-    ra.World = function(_unitSize, _width, _height){
+    game.Scene = function(_unitSize, _width, _height){
     
-        this.addLayout = function(index,layout,callback){
+        EventEmitter.call(this);
 
+        var self = this;
+        
+        this.addLayout = function(index,layout,callback){
+             function func(args){
+                var s = "";
+                for (var i = 0; i < args[0]; i++) {
+                    s = s + i + "-";
+                }
+                return s;
+             }
+             
+             work(func,[100000],function(data){
+                self.emit("add",data);
+             });
         }
         
         this.deleteLayout = function(index,callback){
@@ -19,7 +33,7 @@
 
     }
 
-    ra.Layout = function(){
+    game.Layout = function(){
         
         this.addTile = function(x,y,tile,callback){
         
@@ -35,7 +49,7 @@
         
     }
 
-    ra.Tile = function(){
+    game.Tile = function(){
         
     }
     
